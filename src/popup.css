@@ -29,34 +29,6 @@ body {
   padding: 20px;
 }
 
-.title {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-
-.subtitle {
-  font-size: 12px;
-}
-
-code {
-  font-size: 12px;
-  font-family: inherit;
-  background-color: rgba(254, 237, 185, 0.3);
-  padding: 2px 4px;
-  border-radius: 2px;
-}
-
-.counter-label {
-  font-size: 12px;
-  margin-bottom: 5px;
-}
-
-.counter {
-  font-size: 36px;
-  font-weight: 700;
-}
-
 .button-container {
   margin-top: 15px;
 }
@@ -82,6 +54,11 @@ code {
 
 .button:hover {
   transform: scale(1.1);
+}
+
+.button:disabled:hover {
+  transform: none;
+  cursor: default;
 }
 
 .divider {
