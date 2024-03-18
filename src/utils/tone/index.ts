@@ -5,6 +5,7 @@ import * as tone from 'tone';
 import { state } from '../../state';
 import { fetchCSSProperties } from '../css';
 import { Synths } from './types';
+import { statusUpdate } from '../../controllers/statusUpdate';
 
 export async function populateTransport(transport: Transport, synths: Synths) {
   let all = document.getElementsByTagName('*');
@@ -81,14 +82,14 @@ export const setupInstruments = () => {
   return { synth1: bgcSynth, synth2: cSynth };
 };
 
-export const handlePlaybackFinished = async () => {
-  return new Promise(async (resolve) => {
-    state.transport.schedule(async () => {
-      state.transport.cancel();
-      state.transport.stop();
-      state.isRunning = false;
+export const handlePlaybackFinished = () => {
+  state.transport.schedule(async () => {
+    state.transport.cancel();
+    state.transport.stop();
+    state.isRunning = false;
 
-      resolve(null);
-    }, state.finalTime + 1);
-  });
+    await statusUpdate(
+      `This performance has finished. I hope you enjoyed the dulcet tones of ${window.location.hostname}`
+    );
+  }, state.finalTime + 1);
 };

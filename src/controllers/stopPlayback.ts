@@ -1,8 +1,7 @@
 import { state } from '../state';
 
 export const stopPlayback = () => {
-  const { transport } = state;
-  transport.cancel();
-  transport.stop();
+  state.transport.cancel();
+  state.transport.stop();
   state.isRunning = false;
 };

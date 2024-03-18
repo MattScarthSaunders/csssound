@@ -4,7 +4,6 @@ import { stopPlayback } from './controllers/stopPlayback';
 import { configureRunner } from './controllers/configureRunner';
 import { startPlayback } from './controllers/startPlayback';
 import { state } from './state';
-import { statusUpdate } from './controllers/statusUpdate';
 
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
   if (request.type === 'STOP') {
@@ -17,11 +16,7 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
 
     await startPlayback(synths);
 
-    await handlePlaybackFinished();
-
-    await statusUpdate(
-      `This performance has finished. I hope you enjoyed the dulcet tones of ${window.location.hostname}`
-    );
+    handlePlaybackFinished();
   }
 
   if (request.type === 'GET_STATUS') {
