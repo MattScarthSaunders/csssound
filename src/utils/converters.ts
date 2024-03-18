@@ -17,7 +17,7 @@ export const toRGBA = (color: string) => {
   return [data[0], data[1], data[2], data[3] / 255];
 };
 
-export const getElementDimensionsPx = (element: any) => {
+export const getElementDimensionsPx = (element: HTMLElement) => {
   var width = element.offsetWidth;
   var height = element.offsetHeight;
 
@@ -27,7 +27,10 @@ export const getElementDimensionsPx = (element: any) => {
   };
 };
 
-export const convertCSSValuesToUseableFormats = (dims: any, colors: any) => ({
+export const convertCSSValuesToUseableFormats = (
+  dims: { width: number; height: number },
+  colors: { rgbaBGColor: number[]; rgbaColor: number[] }
+) => ({
   isTall: dims.height >= dims.width,
   isWide: dims.width >= dims.height,
   bgColorResolvedValue: Math.floor(

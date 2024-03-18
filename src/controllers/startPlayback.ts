@@ -1,8 +1,9 @@
 import { state } from '../state';
 import { populateTransport } from '../utils/tone';
+import { Synths } from '../utils/tone/types';
 import { statusUpdate } from './statusUpdate';
 
-export const startPlayback = async (synths: any) => {
+export const startPlayback = async (synths: Synths) => {
   state.isRunning = true;
   state.transport.start();
   await statusUpdate('Composing...');

@@ -4,7 +4,7 @@ import { convertCSSValuesToUseableFormats } from '../converters';
 import * as tone from 'tone';
 import { state } from '../../state';
 import { fetchCSSProperties } from '../css';
-import { Synths } from './types';
+import { FormattedValues, Synths } from './types';
 import { statusUpdate } from '../../controllers/statusUpdate';
 
 export async function populateTransport(transport: Transport, synths: Synths) {
@@ -36,7 +36,7 @@ export async function populateTransport(transport: Transport, synths: Synths) {
 export const scheduleNotesInTransport = (
   transport: Transport,
   synths: Synths,
-  formattedValues: any,
+  formattedValues: FormattedValues,
   now: number,
   i: number
 ) => {
