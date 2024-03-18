@@ -1,30 +1,3 @@
-export const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
-
-export const statusUpdate = async (message: string, isRunning: boolean) => {
-  await delay(1000);
-
-  console.log('CSS Sound: ', message);
-
-  chrome.runtime.sendMessage({
-    type: 'STATUS_UPDATE',
-    statusText: message,
-    isRunning,
-  });
-
-  return message;
-};
-
-export const isNonZero = (arr: number[]) => {
-  let isNotZero = false;
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] !== 0) {
-      isNotZero = true;
-      break;
-    }
-  }
-  return isNotZero;
-};
-
 export const toRGBA = (color: string) => {
   // Create a temporary canvas element to use for color conversion
   let canvas = document.createElement('canvas');
@@ -53,3 +26,14 @@ export const getElementDimensionsPx = (element: any) => {
     height: height,
   };
 };
+
+export const convertCSSValuesToUseableFormats = (dims: any, colors: any) => ({
+  isTall: dims.height >= dims.width,
+  isWide: dims.width >= dims.height,
+  bgColorResolvedValue: Math.floor(
+    colors.rgbaBGColor.reduce((a: number, c: number) => a + c, 0) / 4
+  ),
+  colorResolvedValue: Math.floor(
+    colors.rgbaColor.reduce((a: number, c: number) => a + c, 0) / 4
+  ),
+});

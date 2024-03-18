@@ -1,54 +1,28 @@
 'use strict';
 
+import { sendTabsMessage } from './messaging';
 import './popup.css';
+import { setDisableButton, setInnerText } from './utils/html';
 
 (function () {
   function setupButtons() {
     document.getElementById('stopBtn')!.addEventListener('click', () => {
-      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        const tab = tabs[0];
-
-        chrome.tabs.sendMessage(
-          tab.id!,
-          {
-            type: 'STOP',
-          },
-          () => {
-            setDisablePlayButton(false);
-            setTextStatus('');
-          }
-        );
+      sendTabsMessage('STOP', () => {
+        setDisableButton('playBtn', false);
+        setInnerText('status', '');
       });
     });
 
     document.getElementById('playBtn')!.addEventListener('click', () => {
-      const btn = document.getElementById('playBtn') as HTMLButtonElement;
-      btn.disabled = true;
-
-      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        const tab = tabs[0];
-
-        chrome.tabs.sendMessage(tab.id!, {
-          type: 'START',
-        });
-      });
+      setDisableButton('playBtn', true);
+      sendTabsMessage('START');
     });
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      const tab = tabs[0];
-
-      chrome.tabs.sendMessage(
-        tab.id!,
-        {
-          type: 'GET_STATUS',
-        },
-        (response) => {
-          setDisablePlayButton(response.isRunning);
-          setTextStatus(response.statusText);
-        }
-      );
+    sendTabsMessage('GET_STATUS', (response) => {
+      setDisableButton('playBtn', response.isRunning);
+      setInnerText('status', response.statusText);
     });
 
     setupButtons();
@@ -56,17 +30,8 @@ import './popup.css';
 
   chrome.runtime.onMessage.addListener(async (request) => {
     if (request.type === 'STATUS_UPDATE') {
-      setDisablePlayButton(request.isRunning);
-      setTextStatus(request.statusText);
+      setDisableButton('playBtn', request.isRunning);
+      setInnerText('status', request.statusText);
     }
   });
 })();
-
-const setTextStatus = (status: string) => {
-  document.getElementById('status')!.innerText = status;
-};
-
-const setDisablePlayButton = (state: boolean) => {
-  const btn = document.getElementById('playBtn') as HTMLButtonElement;
-  btn.disabled = state;
-};

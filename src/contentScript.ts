@@ -1,68 +1,33 @@
 'use strict';
-import * as Tone from 'tone';
-import { statusUpdate } from './utils';
-import {
-  handlePlaybackFinished,
-  populateTransport,
-  setupInstruments,
-} from './toneFuncs';
-
-let statusText = '';
-let isRunning = false;
-
-let bgcSynth: Tone.Synth;
-let cSynth: Tone.Synth;
-let t = Tone.Transport;
+import { handlePlaybackFinished } from './utils/tone';
+import { stopPlayback } from './controllers/stopPlayback';
+import { configureRunner } from './controllers/configureRunner';
+import { startPlayback } from './controllers/startPlayback';
+import { state } from './state';
+import { statusUpdate } from './controllers/statusUpdate';
 
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
   if (request.type === 'STOP') {
-    t.cancel();
-    t.stop();
-    isRunning = false;
-    sendResponse({});
+    stopPlayback();
+    sendResponse({ isRunning: state.isRunning, statusText: state.statusText });
   }
 
   if (request.type === 'START') {
-    isRunning = true;
+    const synths = await configureRunner();
 
-    await Tone.start();
-    Tone.setContext(new AudioContext());
+    await startPlayback(synths);
 
-    statusText = await statusUpdate('Tuning instruments...', isRunning);
+    await handlePlaybackFinished();
 
-    const { synth1, synth2 } = setupInstruments(bgcSynth, cSynth);
-
-    t.start();
-
-    statusText = await statusUpdate('Composing...', isRunning);
-
-    const { finalTime, elementCount } = await populateTransport(
-      t,
-      synth1,
-      synth2
-    );
-
-    statusText = await statusUpdate(
-      `${elementCount} notes plotted, the recital is now underway...`,
-      isRunning
-    );
-
-    await handlePlaybackFinished(t, finalTime!);
-
-    isRunning = false;
-
-    statusText = await statusUpdate(
-      `This performance has finished. I hope you enjoyed the dulcet tones of ${window.location.hostname}`,
-      isRunning
+    await statusUpdate(
+      `This performance has finished. I hope you enjoyed the dulcet tones of ${window.location.hostname}`
     );
   }
 
   if (request.type === 'GET_STATUS') {
-    sendResponse({ isRunning, statusText });
+    sendResponse({ isRunning: state.isRunning, statusText: state.statusText });
   }
 
-  // Send an empty response
-  // See https://github.com/mozilla/webextension-polyfill/issues/130#issuecomment-531531890
-  sendResponse({ isRunning, statusText });
+  sendResponse({ isRunning: state.isRunning, statusText: state.statusText });
   return true;
 });

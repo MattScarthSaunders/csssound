@@ -21,7 +21,6 @@ A silly little project that converts certain css properties of a webpage to audi
 
 It currently works, but I bashed it out for fun, so it's not incredibly well implemented. What I'm planning on working on in future if I find the will/time:
 
-- Convert it all to Typescript! It's getting unwieldy and Typescript is just a lot nicer to work with.
 - Make it more rhythmic, currently there are two tones per element, which are completely coupled. It would be nice to have multiple channels running.
 - instrument choices
 - volume controls
