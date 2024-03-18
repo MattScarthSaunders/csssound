@@ -12,7 +12,7 @@ A silly little project that converts certain css properties of a webpage to audi
 - `npm run build` in the terminal
 - Open Chrome and navigate to `chrome://extensions/`
 - Click `Load unpacked`
-- Select the cssSound directory you created
+- Select the csssound/build directory you created
 - Make sure it's activated in the browser
 - Go to a website, open it up and hit play!
   - NOTE: sites which already use audio will not always work well (such as youtube), nor will it work on certain pages like `chrome://extensions/`, you need to be on an actual website page.
