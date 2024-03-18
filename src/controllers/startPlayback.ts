@@ -4,7 +4,6 @@ import { Synths } from '../utils/tone/types';
 import { statusUpdate } from './statusUpdate';
 
 export const startPlayback = async (synths: Synths) => {
-  state.isRunning = true;
   state.transport.start();
   await statusUpdate('Composing...');
 
