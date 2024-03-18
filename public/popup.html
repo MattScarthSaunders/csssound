@@ -7,19 +7,19 @@
   </head>
   <body id="popup">
     <div class="app">
-      <h2>Let me hear the music!</h2>
-      <p style="color: red">
-        Warning: it's highly recommended you don't do this on full volume...
-      </p>
-      <div class="button-container">
-        <button id="stopBtn" class="button">&#9632;</button>
-        <button id="playBtn" class="button">&#9658;</button>
+      <div class="foreground">
+        <h2 id="title">CSS SOUND</h2>
+        <p id="status"></p>
+        <div class="button-container">
+          <button id="stopBtn" class="button">&#9632;</button>
+          <button id="playBtn" class="button">&#9658;</button>
+        </div>
       </div>
-
-      <hr class="divider" />
-      <p id="status"></p>
+      <div class="background">
+        <div class="wheel wheel1"></div>
+        <div class="wheel wheel2"></div>
+      </div>
     </div>
-
     <script src="popup.js"></script>
   </body>
 </html>

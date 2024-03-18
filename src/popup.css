@@ -9,14 +9,16 @@
 /* normalize css ends here */
 
 html {
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
-    sans-serif;
-  color: #222;
+  font-family: 'Verdana', sans-serif;
 }
 
 body {
-  width: 350px;
-  height: 300px;
+  width: 300px;
+  height: 200px;
+  background-color: rgb(49, 49, 48);
+  color: #222;
+  box-shadow: inset 20px 0px 20px rgba(128, 128, 128, 0.493),
+    inset 0 20px 20px rgba(0, 0, 0, 0.673);
 }
 
 .app {
@@ -24,13 +26,23 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+.foreground {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
   text-align: center;
+  gap: 10px;
   padding: 20px;
 }
 
 .button-container {
-  margin-top: 15px;
+  margin-top: 85px;
 }
 
 .button {
@@ -39,7 +51,9 @@ body {
   padding: 10px 20px;
   margin-right: 4px;
   margin-left: 4px;
-  background-color: bisque;
+  background-color: rgb(251, 236, 217);
+  box-shadow: 10px 5px 15px rgba(0, 0, 0, 0.706), inset 0 -5px 3px grey,
+    inset -5px -2px 3px grey, inset 5px -2px 3px grey;
   font-size: 16px;
   cursor: pointer;
   border-radius: 4px;
@@ -56,14 +70,48 @@ body {
   transform: scale(1.1);
 }
 
+.button:active {
+  transform: scale(0.95);
+}
+
 .button:disabled:hover {
   transform: none;
   cursor: default;
 }
 
-.divider {
-  margin: 30px auto 25px;
-  width: 50px;
-  border: 0.5px dashed #000;
-  opacity: 0.1;
+#title {
+  color: rgb(255, 230, 201);
+  font-size: 1.5rem;
+}
+
+#status {
+  color: orange;
+  font-size: 1rem;
+  height: 10%;
+}
+
+#warning {
+  color: red;
+  font-size: 1rem;
+}
+
+.background {
+  position: absolute;
+  width: 55%;
+  height: 40%;
+  background-color: rgba(255, 255, 255, 0.07);
+  box-shadow: inset -4px -4px 20px rgba(255, 255, 255, 0.124),
+    inset 4px 4px 20px rgba(255, 255, 255, 0.124);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30%;
+}
+
+.wheel {
+  content: '';
+  background-color: rgba(0, 0, 0, 0.773);
+  border-radius: 100%;
+  width: 30px;
+  height: 30px;
 }
