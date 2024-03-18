@@ -110,8 +110,32 @@ body {
 
 .wheel {
   content: '';
-  background-color: rgba(0, 0, 0, 0.773);
+  background-color: rgba(255, 255, 255, 0.554);
   border-radius: 100%;
   width: 30px;
   height: 30px;
+  border: 2px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spoke {
+  position: absolute;
+  width: 17px;
+  height: 17px;
+  background-color: black;
+}
+
+.spoke + .spoke {
+  transform: rotateZ(45deg);
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

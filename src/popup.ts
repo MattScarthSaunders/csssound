@@ -11,11 +11,17 @@ import { setDisableButton, setInnerText } from './utils/html';
         setDisableButton('playBtn', false);
         setInnerText('status', '');
       });
+      document.getElementById('wheel1')!.style.animation = 'none';
+      document.getElementById('wheel2')!.style.animation = 'none';
     });
 
     document.getElementById('playBtn')!.addEventListener('click', () => {
       setDisableButton('playBtn', true);
       sendTabsMessage('START');
+      document.getElementById('wheel1')!.style.animation =
+        'rotate 2s linear infinite';
+      document.getElementById('wheel2')!.style.animation =
+        'rotate 2s linear infinite';
     });
   }
 
