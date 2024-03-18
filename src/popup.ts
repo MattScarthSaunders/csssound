@@ -4,12 +4,12 @@ import './popup.css';
 
 (function () {
   function setupButtons() {
-    document.getElementById('stopBtn').addEventListener('click', () => {
+    document.getElementById('stopBtn')!.addEventListener('click', () => {
       chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         const tab = tabs[0];
 
         chrome.tabs.sendMessage(
-          tab.id,
+          tab.id!,
           {
             type: 'STOP',
           },
@@ -21,12 +21,14 @@ import './popup.css';
       });
     });
 
-    document.getElementById('playBtn').addEventListener('click', () => {
-      document.getElementById('playBtn').disabled = true;
+    document.getElementById('playBtn')!.addEventListener('click', () => {
+      const btn = document.getElementById('playBtn') as HTMLButtonElement;
+      btn.disabled = true;
+
       chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         const tab = tabs[0];
 
-        chrome.tabs.sendMessage(tab.id, {
+        chrome.tabs.sendMessage(tab.id!, {
           type: 'START',
         });
       });
@@ -38,7 +40,7 @@ import './popup.css';
       const tab = tabs[0];
 
       chrome.tabs.sendMessage(
-        tab.id,
+        tab.id!,
         {
           type: 'GET_STATUS',
         },
@@ -60,10 +62,11 @@ import './popup.css';
   });
 })();
 
-const setTextStatus = (status) => {
-  document.getElementById('status').innerText = status;
+const setTextStatus = (status: string) => {
+  document.getElementById('status')!.innerText = status;
 };
 
-const setDisablePlayButton = (state) => {
-  document.getElementById('playBtn').disabled = state;
+const setDisablePlayButton = (state: boolean) => {
+  const btn = document.getElementById('playBtn') as HTMLButtonElement;
+  btn.disabled = state;
 };

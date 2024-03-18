@@ -1,11 +1,12 @@
-import {
-  statusUpdate,
-  toRGBA,
-  isNonZero,
-  getElementDimensionsPx,
-} from './utils';
+import { Transport } from 'tone/build/esm/core/clock/Transport';
+import { toRGBA, isNonZero, getElementDimensionsPx } from './utils';
+import * as tone from 'tone';
 
-export async function populateTransport(transport, bgcSynth, cSynth, tone) {
+export async function populateTransport(
+  transport: Transport,
+  bgcSynth: tone.Synth,
+  cSynth: tone.Synth
+) {
   let all = document.getElementsByTagName('*');
 
   let finalTime;
@@ -46,7 +47,7 @@ export async function populateTransport(transport, bgcSynth, cSynth, tone) {
   return { finalTime, elementCount: all.length };
 }
 
-export const setupInstruments = (bgcSynth, cSynth, tone) => {
+export const setupInstruments = (bgcSynth: tone.Synth, cSynth: tone.Synth) => {
   bgcSynth = new tone.Synth({
     envelope: { attack: 5, decay: 1, sustain: 1, release: 5 },
   });
@@ -66,13 +67,16 @@ export const setupInstruments = (bgcSynth, cSynth, tone) => {
   return { synth1: bgcSynth, synth2: cSynth };
 };
 
-export const handlePlaybackFinished = async (transport, finalTime) => {
+export const handlePlaybackFinished = async (
+  transport: Transport,
+  finalTime: number
+) => {
   return new Promise(async (resolve) => {
     transport.schedule(async () => {
       transport.cancel();
       transport.stop();
 
-      resolve();
+      resolve(null);
     }, finalTime + 1);
   });
 };

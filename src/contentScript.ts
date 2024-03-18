@@ -10,8 +10,8 @@ import {
 let statusText = '';
 let isRunning = false;
 
-let bgcSynth;
-let cSynth;
+let bgcSynth: Tone.Synth;
+let cSynth: Tone.Synth;
 let t = Tone.Transport;
 
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
@@ -30,7 +30,7 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
 
     statusText = await statusUpdate('Tuning instruments...', isRunning);
 
-    const { synth1, synth2 } = setupInstruments(bgcSynth, cSynth, Tone);
+    const { synth1, synth2 } = setupInstruments(bgcSynth, cSynth);
 
     t.start();
 
@@ -39,8 +39,7 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
     const { finalTime, elementCount } = await populateTransport(
       t,
       synth1,
-      synth2,
-      Tone
+      synth2
     );
 
     statusText = await statusUpdate(
@@ -48,7 +47,7 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
       isRunning
     );
 
-    await handlePlaybackFinished(t, finalTime);
+    await handlePlaybackFinished(t, finalTime!);
 
     isRunning = false;
 

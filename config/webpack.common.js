@@ -46,7 +46,20 @@ const common = {
           },
         ],
       },
+      {
+        test: /\.tsx?$/,
+        use: {
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true, // Speeds up compilation
+          },
+        },
+        exclude: /node_modules/,
+      },
     ],
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
   },
   plugins: [
     // Copy static assets from `public` folder to `build` folder
