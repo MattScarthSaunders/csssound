@@ -39,5 +39,9 @@ import { setDisableButton, setInnerText } from './utils/html';
       setDisableButton('playBtn', request.isRunning);
       setInnerText('status', request.statusText);
     }
+    if (request.statusText.includes('This performance has finished.')) {
+      document.getElementById('wheel1')!.style.animation = 'none';
+      document.getElementById('wheel2')!.style.animation = 'none';
+    }
   });
 })();

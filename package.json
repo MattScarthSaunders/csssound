@@ -1,7 +1,7 @@
 {
   "name": "csssound",
-  "version": "0.1.0",
-  "description": "My Chrome Extension",
+  "version": "1.0.0",
+  "description": "An experimental musical experience, translating website html/css elements into audio.",
   "private": true,
   "scripts": {
     "watch": "webpack --mode=development --watch --config config/webpack.config.js",
